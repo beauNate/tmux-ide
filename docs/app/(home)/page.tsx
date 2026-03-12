@@ -131,6 +131,13 @@ export default function HomePage() {
       {/* Install */}
       <section className="flex flex-col items-center gap-4 px-6 pb-20">
         <InstallButton />
+        <p className="text-xs text-fd-muted-foreground mt-2">
+          The install script also registers the{" "}
+          <Link href="/docs/getting-started#claude-code-skill" className="underline hover:text-fd-foreground transition-colors">
+            Claude Code skill
+          </Link>
+          {" "}— so Claude can configure your workspace automatically.
+        </p>
       </section>
 
       {/* Agent Teams Demo */}
@@ -194,6 +201,10 @@ export default function HomePage() {
           <Feature
             title="One command"
             description="tmux-ide handles tmux sessions, pane splitting, env vars, and agent flags. You just run tmux-ide."
+          />
+          <Feature
+            title="Claude Code skill built in"
+            description="The install script registers a Claude Code skill automatically. Ask Claude to set up your workspace and it handles detection, layout, and config."
           />
         </div>
       </section>

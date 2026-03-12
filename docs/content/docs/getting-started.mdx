@@ -84,3 +84,30 @@ Or use tmux directly:
 ```bash
 tmux attach -t my-project
 ```
+
+## Claude Code Skill
+
+tmux-ide ships with a built-in [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill. When you install tmux-ide, the skill is automatically registered so Claude Code knows how to configure and manage your workspace.
+
+**What the skill enables:**
+
+- Ask Claude to "set up a tmux IDE" and it will auto-detect your stack, present layout options with ASCII diagrams, and write the config for you
+- Ask Claude to "add a pane" or "set up agent teams" and it will use the programmatic CLI to modify your `ide.yml`
+- The team lead agent can self-configure — spawning new teammates, assigning tasks, and restarting the layout
+
+**How it works:**
+
+The install script (both `curl | sh` and `npm install -g`) copies `SKILL.md` into `~/.claude/skills/tmux-ide/`. Claude Code picks this up automatically — no extra configuration needed.
+
+If you installed via `npx` (without a global install), you can manually register the skill:
+
+```bash
+mkdir -p ~/.claude/skills/tmux-ide
+cp "$(npm root -g)/tmux-ide/skill/SKILL.md" ~/.claude/skills/tmux-ide/
+```
+
+Once installed, just ask Claude Code something like:
+
+> "Set up a tmux IDE for this project"
+
+and it will handle the rest.
