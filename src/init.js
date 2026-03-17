@@ -2,31 +2,27 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve, basename } from "node:path";
 import { writeFileSync } from "node:fs";
 import { detectStack, suggestConfig } from "./detect.js";
-import { printLayout } from "./lib/output.js";
+import { outputError, printLayout } from "./lib/output.js";
 
 export async function init({ template, json } = {}) {
   const dir = process.cwd();
   const configPath = resolve(dir, "ide.yml");
 
   if (existsSync(configPath)) {
-    if (json) {
-      console.error(JSON.stringify({ error: "ide.yml already exists", code: "EXISTS" }));
-    } else {
-      console.error("ide.yml already exists in this directory");
-    }
-    process.exit(1);
+    outputError("ide.yml already exists in this directory", "EXISTS", { json });
   }
 
   // If a specific template is requested, use it
   if (template) {
     const templatePath = resolve(import.meta.dirname, "..", "templates", `${template}.yml`);
     if (!existsSync(templatePath)) {
-      if (json) {
-        console.error(JSON.stringify({ error: `Template "${template}" not found`, code: "NOT_FOUND" }));
-      } else {
-        console.error(`Template "${template}" not found. Available: default, nextjs, convex, vite, python, go, agent-team, agent-team-nextjs, agent-team-monorepo`);
-      }
-      process.exit(1);
+      outputError(
+        json
+          ? `Template "${template}" not found`
+          : `Template "${template}" not found. Available: default, nextjs, convex, vite, python, go, agent-team, agent-team-nextjs, agent-team-monorepo`,
+        "NOT_FOUND",
+        { json },
+      );
     }
 
     let content = readFileSync(templatePath, "utf-8");
