@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Layout({ children }: LayoutProps<"/">) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
